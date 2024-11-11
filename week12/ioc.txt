@@ -1,0 +1,4 @@
+sqlmap
+Nmap
+admin
+"UNION SELECT"
