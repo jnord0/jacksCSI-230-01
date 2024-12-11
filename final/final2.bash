@@ -4,7 +4,6 @@
 LOG_FILE="$1"
 IOC_FILE="$2"
 
-# Output file
 OUTPUT_FILE="report.txt"
 
 # Validate input files
@@ -14,10 +13,8 @@ if [[ ! -f "$LOG_FILE" || ! -f "$IOC_FILE" ]]; then
     exit 1
 fi
 
-# Debugging: Print matches from grep
 grep -Ff "$IOC_FILE" "$LOG_FILE" > temp_matches.txt
 
-# Process the log file for matches with the IOCs
 grep -Ff "$IOC_FILE" "$LOG_FILE" | while read line; do
     echo "$line" | awk '
 {
@@ -49,7 +46,6 @@ grep -Ff "$IOC_FILE" "$LOG_FILE" | while read line; do
 '
 done  > "$OUTPUT_FILE"
 
-# Confirm script execution
 if [[ -s "$OUTPUT_FILE" ]]; then
     echo "Filtered logs saved to $OUTPUT_FILE"
 else
