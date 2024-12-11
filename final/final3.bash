@@ -41,7 +41,6 @@ EOF
 
 # Add table rows from the report file
 while IFS= read -r line; do
-    # Split the line into components (IP, date, URL)
     ip=$(echo "$line" | awk '{print $1}')
     datetime=$(echo "$line" | awk '{print $2}')
     url=$(echo "$line" | awk '{print $3}')
@@ -50,14 +49,12 @@ while IFS= read -r line; do
     echo "        <tr><td>$ip</td><td>$datetime</td><td>$url</td></tr>" >> "$HTML_FILE"
 done < "$INPUT_FILE"
 
-# Close the HTML tags
 cat << EOF >> "$HTML_FILE"
     </table>
 </body>
 </html>
 EOF
 
-# Move the file to /var/www/html/ (requires sudo if not run as root)
 if mv "$HTML_FILE" /var/www/html/; then
     echo "HTML report successfully moved to /var/www/html/report.html"
     echo "You can access the report at: http://localhost/report.html"
